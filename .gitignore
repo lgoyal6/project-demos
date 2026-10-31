@@ -1,0 +1,11 @@
+.vercel/
+.env*
+vendor/
+node_modules/
+__pycache__/
+*.pyc
+/build.py
+/prepare.py
+/prepare-node.cjs
+/record-chip.py
+/test_demo_boundaries.py
