@@ -1,0 +1,487 @@
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: rgb(14,14,24);
+  color: rgb(210,210,235);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ── Tab bar (bottom) ── */
+#tab-bar {
+  display: flex;
+  flex-direction: row;
+  background: rgb(14,14,24);
+  border-top: 1px solid rgb(40,40,65);
+  order: 2;
+  flex-shrink: 0;
+}
+
+.tab-btn {
+  background: rgb(28,28,46);
+  color: rgb(140,145,180);
+  border: none;
+  border-top: 1px solid rgb(55,55,85);
+  padding: 9px 32px;
+  margin-right: 2px;
+  font: 13px "Helvetica Neue", sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.tab-btn.active {
+  background: rgb(14,14,24);
+  color: rgb(220,220,245);
+  border-top: 2px solid rgb(70,130,230);
+  font-weight: bold;
+}
+.tab-btn:hover:not(.active) {
+  background: rgb(38,38,60);
+  color: rgb(180,185,220);
+}
+
+/* ── Tab content ── */
+.tab-content { display: none; flex: 1; overflow: hidden; order: 1; }
+.tab-content.active { display: flex; flex-direction: column; }
+
+/* ── Credit ── */
+#credit {
+  text-align: center;
+  color: rgb(200,204,235);
+  font: italic 22px "Helvetica Neue";
+  padding: 6px 0 8px;
+  flex-shrink: 0;
+  order: 3;
+}
+#credit-contact {
+  font-size: 11px;
+  color: rgb(155,160,200);
+}
+
+/* ══════════════ MAIN PANEL ══════════════ */
+#main-layout {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sleepiness / IR column */
+#sleepiness-col {
+  flex: 0 1 220px;
+  min-width: 0;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+}
+#sleepiness-canvas { width: 100%; height: 100%; display: block; }
+
+/* Dial column */
+#dial-col {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+#dial-canvas { display: block; }
+
+/* Plasma + biomarker column */
+#plasma-col {
+  flex: 0 1 420px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: rgb(20,20,34);
+  overflow: hidden;
+}
+#plasma-canvas { display: block; width: 420px; height: 340px; flex-shrink: 0; }
+
+/* ── Biomarker panel ── */
+#biomarker-panel {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  padding: 10px 12px 8px;
+  gap: 8px;
+  background: rgb(20,20,34);
+  overflow: hidden;
+}
+#bm-col1, #bm-col2 {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.bm-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+}
+.bm-label {
+  font: 11px "Helvetica Neue";
+  color: rgb(200,204,235);
+  width: 105px;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+.bm-box {
+  font: bold 11px "Helvetica Neue";
+  color: black;
+  border-radius: 5px;
+  padding: 3px 6px;
+  min-width: 72px;
+  text-align: center;
+}
+.bm-yellow   { background: rgb(255,185,60); }
+.bm-nightblue{ background: rgb(40,55,150); color: rgb(200,215,255); }
+.bm-red      { background: rgb(255,70,70); }
+.bm-blue     { background: rgb(70,130,230); }
+.bm-purple   { background: rgb(200,120,245); }
+.bm-hidden   { display: none !important; }
+
+/* ── Q&A Panel ── */
+#qa-panel {
+  flex: 0 1 260px;
+  min-width: 0;
+  background: rgb(20,20,34);
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+}
+.qa-q {
+  font: 13px "Helvetica Neue";
+  color: rgb(210,210,235);
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+.qa-btn-row {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+.qa-btn {
+  background: rgb(28,28,45);
+  color: rgb(145,145,175);
+  border: 1px solid rgb(52,52,80);
+  border-radius: 5px;
+  font: 12px "Helvetica Neue";
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  flex: 1;
+}
+.qa-btn:hover:not(.active) {
+  background: rgb(38,38,60);
+  color: rgb(175,175,205);
+}
+.qa-btn.active {
+  background: rgb(28,58,108);
+  color: rgb(200,215,245);
+  border-color: rgb(70,130,230);
+}
+.qa-divider {
+  height: 1px;
+  background: rgb(50,50,80);
+  margin: 16px 0;
+}
+.qa-val {
+  font: 11px "Helvetica Neue";
+  color: rgb(160,180,220);
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+.qa-sublabel {
+  font: 9px "Helvetica Neue";
+  color: rgb(120,145,190);
+  text-align: center;
+  min-height: 14px;
+  margin-top: 4px;
+  word-wrap: break-word;
+}
+.qa-hidden { display: none !important; }
+.qa-manual-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font: 12px "Helvetica Neue";
+  color: rgb(180,185,220);
+}
+.qa-manual-row input[type="time"] {
+  background: rgb(28,28,45);
+  color: rgb(210,210,235);
+  border: 1px solid rgb(52,52,80);
+  border-radius: 4px;
+  padding: 4px 6px;
+  font: 12px "Helvetica Neue";
+  flex: 1;
+}
+input[type="range"] {
+  width: 100%;
+  accent-color: rgb(70,130,230);
+  margin-top: 4px;
+}
+
+/* Sunrise / Sunset time-box rows in Q&A */
+#sun-time-boxes { margin-top: 6px; }
+.qa-sun-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 7px;
+}
+.qa-sun-label {
+  font: 12px "Helvetica Neue";
+  color: rgb(180,185,220);
+  width: 46px;
+  flex-shrink: 0;
+}
+
+/* Phase-shift buttons in schedule tab */
+.phase-btn { font: bold 13px "Helvetica Neue" !important; flex: 0 0 auto !important; padding: 6px 14px !important; }
+
+/* ══════════════ SCHEDULE TAB ══════════════ */
+#schedule-layout {
+  padding: 36px 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+  overflow-y: auto;
+}
+#sched-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.sched-question {
+  font: bold 15px "Helvetica Neue";
+  color: rgb(210,212,240);
+  margin-bottom: 0;
+}
+#sched-reset {
+  background: rgb(35,35,55);
+  color: rgb(210,210,235);
+  border: 1px solid rgb(70,70,110);
+  border-radius: 4px;
+  font: bold 11px "Helvetica Neue";
+  padding: 5px 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+#sched-reset:hover { background: rgb(55,55,80); }
+
+#calendar-scroll-wrap {
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+#calendar-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  padding-bottom: 8px;
+  min-width: max-content;
+}
+.cal-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.cal-day-label {
+  font: 10px "Helvetica Neue";
+  color: rgb(140,145,180);
+}
+.cal-day-num {
+  font: bold 12px "Helvetica Neue";
+  color: rgb(210,212,240);
+}
+.cal-month {
+  font: 10px "Helvetica Neue";
+  color: rgb(120,130,170);
+}
+.cal-icon {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgb(55,60,90);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.cal-icon.selected-green { background: rgb(30,100,50); border-color: rgb(50,175,80); }
+.cal-icon.selected-red   { background: rgb(110,28,28); border-color: rgb(200,60,60); }
+.cal-icon:hover          { border-color: rgb(100,110,160); }
+.cal-icon svg { width: 22px; height: 22px; opacity: 0.5; }
+.cal-icon.selected-green svg, .cal-icon.selected-red svg { opacity: 1; }
+
+/* Open-detail button ,  appears below clock icon when day is selected */
+.cal-open-btn {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  visibility: hidden;
+  margin-top: 2px;
+}
+.cal-open-btn img {
+  border-radius: 10px;
+  display: block;
+  transition: opacity 0.15s;
+}
+.cal-open-btn:hover img { opacity: 0.72; }
+
+/* Sched info messages */
+#sched-info { margin-top: 8px; display: flex; flex-direction: column; gap: 0; }
+.sched-hidden { display: none !important; }
+.sched-msg {
+  font: 15px "Helvetica Neue";
+  color: rgb(190,195,230);
+  line-height: 1.5;
+  padding: 10px 0;
+}
+.sched-sep { height: 1px; background: rgb(80,85,125); margin: 4px 0; }
+
+#sched-print-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+.sched-create-label {
+  font: 15px "Helvetica Neue";
+  color: rgb(210,212,240);
+}
+#pdf-btn {
+  background: rgb(35,35,55);
+  color: rgb(210,210,235);
+  border: 1px solid rgb(70,70,110);
+  border-radius: 4px;
+  font: bold 11px "Helvetica Neue";
+  padding: 5px 16px;
+  cursor: pointer;
+}
+#pdf-btn:hover { background: rgb(55,55,80); }
+
+/* ── Day detail overlay ── */
+#day-detail-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.45);
+  z-index: 100;
+}
+.overlay-hidden { display: none !important; }
+
+#day-detail-panel {
+  background: rgb(22,22,40);
+  border: 1.5px solid rgb(72,78,118);
+  border-radius: 14px;
+  width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 22px 20px;
+  gap: 0;
+}
+
+#dde-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+#dde-spacer { width: 28px; }
+#dde-date {
+  flex: 1;
+  text-align: center;
+  font: bold 17px "Helvetica Neue";
+  color: rgb(240,242,255);
+}
+#dde-close {
+  width: 28px; height: 28px;
+  background: rgb(48,48,72);
+  color: rgb(200,200,225);
+  border: 1px solid rgb(80,82,118);
+  border-radius: 50%;
+  font: bold 17px "Helvetica Neue";
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding-bottom: 2px;
+}
+#dde-close:hover { background: rgb(110,45,45); color: white; }
+
+#dde-dial-canvas {
+  display: block;
+  margin: 0 auto 18px;
+}
+
+/* Day detail table */
+#dde-table {
+  border: 1px solid rgb(62,67,100);
+  border-radius: 7px;
+  overflow: hidden;
+  background: rgb(26,26,44);
+}
+.dde-row {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid rgb(55,60,92);
+}
+.dde-row:last-child { border-bottom: none; }
+.dde-cell1 {
+  width: 195px;
+  font: 13px "Helvetica Neue";
+  color: rgb(160,165,205);
+  padding: 11px 14px;
+  flex-shrink: 0;
+}
+.dde-vsep {
+  width: 1px;
+  background: rgb(55,60,92);
+  flex-shrink: 0;
+}
+.dde-cell2 {
+  flex: 1;
+  font: bold 13px "Helvetica Neue";
+  color: rgb(220,225,255);
+  padding: 11px 14px;
+  text-align: center;
+  white-space: pre-line;
+}
+
+/* Day detail banner */
+#dde-banner {
+  margin-top: 14px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: bold 14px "Helvetica Neue";
+  color: black;
+}

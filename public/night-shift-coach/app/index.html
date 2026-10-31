@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Night Shift Coach</title>
+<link rel="stylesheet" href="/night-shift-coach/app/static/css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ── Tab bar (bottom) ── -->
+  <div id="tab-bar">
+    <button class="tab-btn active" data-tab="main">Main Panel</button>
+    <button class="tab-btn"        data-tab="schedule">Night Shift Schedule</button>
+  </div>
+
+  <!-- ════════════════════════════════════ MAIN PANEL TAB ═══════════════════════════════════ -->
+  <div id="tab-main" class="tab-content active">
+    <div id="main-layout">
+
+      <!-- LEFT: Sleepiness / IR bar graph -->
+      <div id="sleepiness-col">
+        <canvas id="sleepiness-canvas"></canvas>
+      </div>
+
+      <!-- CENTER: Circadian Dial -->
+      <div id="dial-col">
+        <canvas id="dial-canvas"></canvas>
+      </div>
+
+      <!-- RIGHT: Plasma graph + Biomarker times -->
+      <div id="plasma-col">
+        <canvas id="plasma-canvas"></canvas>
+        <div id="biomarker-panel">
+          <div id="bm-col1">
+            <div class="bm-row" id="bm-bedtime">
+              <span class="bm-label">Bedtime</span>
+              <span class="bm-box bm-red">--:-- --</span>
+            </div>
+            <div class="bm-row bm-hidden" id="bm-bedtime1">
+              <span class="bm-label">Bedtime 1</span>
+              <span class="bm-box bm-red">--:-- --</span>
+            </div>
+            <div class="bm-row bm-hidden" id="bm-bedtime2">
+              <span class="bm-label">Bedtime 2</span>
+              <span class="bm-box bm-red">--:-- --</span>
+            </div>
+            <div class="bm-row bm-hidden" id="bm-nap">
+              <span class="bm-label">Nap</span>
+              <span class="bm-box bm-red">--:-- --</span>
+            </div>
+            <div class="bm-row bm-hidden" id="bm-eat-start">
+              <span class="bm-label">Eat start time</span>
+              <span class="bm-box bm-purple">--:-- --</span>
+            </div>
+            <div class="bm-row bm-hidden" id="bm-eat-end">
+              <span class="bm-label">Eat end time</span>
+              <span class="bm-box bm-purple">--:-- --</span>
+            </div>
+          </div>
+          <div id="bm-col2">
+            <div class="bm-row" id="bm-dlmo">
+              <span class="bm-label">DLMO</span>
+              <span class="bm-box bm-blue">--:-- --</span>
+            </div>
+            <div class="bm-row" id="bm-mcbt">
+              <span class="bm-label">Min Core Body Temp</span>
+              <span class="bm-box bm-blue">--:-- --</span>
+            </div>
+            <div class="bm-row bm-hidden" id="bm-dip">
+              <span class="bm-label">Afternoon Dip</span>
+              <span class="bm-box bm-yellow">--:-- --</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAR RIGHT: Q&A Panel -->
+      <div id="qa-panel">
+        <div class="qa-q">Sunrise &amp; Sunset times?</div>
+        <div class="qa-btn-row">
+          <button class="qa-btn active" id="sun-auto">Example</button>
+          <button class="qa-btn"        id="sun-manual">Manual</button>
+        </div>
+        <div id="sun-location" class="qa-sublabel"></div>
+        <!-- Coloured time boxes ,  always visible; reflect dial state in both modes -->
+        <div id="sun-time-boxes">
+          <div class="qa-sun-row">
+            <span class="qa-sun-label">Sunrise</span>
+            <span class="bm-box bm-yellow" id="qa-sunrise-box">--:-- --</span>
+          </div>
+          <div class="qa-sun-row">
+            <span class="qa-sun-label">Sunset</span>
+            <span class="bm-box bm-nightblue" id="qa-sunset-box">--:-- --</span>
+          </div>
+        </div>
+
+        <div class="qa-divider"></div>
+
+        <div class="qa-q">How many hours of sleep<br>do you need?</div>
+        <input type="range" id="sleep-slider" min="8" max="32" value="14">
+        <div class="qa-val" id="sleep-val">7.0 hrs</div>
+
+        <div class="qa-divider"></div>
+
+        <div class="qa-q">What is your sleep pattern?</div>
+        <div class="qa-btn-row">
+          <button class="qa-btn active" id="pat-mono">Monophasic</button>
+          <button class="qa-btn"        id="pat-nap">Mono + Nap</button>
+          <button class="qa-btn"        id="pat-bi">Biphasic</button>
+        </div>
+        <div id="nap-section" class="qa-hidden">
+          <div class="qa-q" style="margin-top:12px">How long is your nap?</div>
+          <input type="range" id="nap-slider" min="20" max="90" value="30">
+          <div class="qa-val" id="nap-val">30 mins</div>
+        </div>
+
+        <div class="qa-divider"></div>
+
+        <div class="qa-q">What is your eating pattern?</div>
+        <div class="qa-btn-row">
+          <button class="qa-btn active" id="eat-adlib">Ad Lib</button>
+          <button class="qa-btn"        id="eat-tr10">10hr Window</button>
+          <button class="qa-btn"        id="eat-tr8">8hr Window</button>
+        </div>
+
+        <div class="qa-divider"></div>
+
+        <div class="qa-q">Include Afternoon Dip?</div>
+        <div class="qa-btn-row">
+          <button class="qa-btn active" id="dip-no">No</button>
+          <button class="qa-btn"        id="dip-yes">Yes</button>
+        </div>
+
+        <div class="qa-divider"></div>
+
+        <div class="qa-q">Do you work night shift?</div>
+        <div class="qa-btn-row">
+          <button class="qa-btn active" id="ns-no">No</button>
+          <button class="qa-btn"        id="ns-yes">Yes</button>
+        </div>
+        <div id="ns-section" class="qa-hidden">
+          <div class="qa-q" style="margin-top:12px">How many hours is<br>your night shift?</div>
+          <input type="range" id="ns-slider" min="8" max="28" value="24">
+          <div class="qa-val" id="ns-val">12.0 hrs</div>
+        </div>
+      </div>
+
+    </div><!-- #main-layout -->
+  </div><!-- #tab-main -->
+
+  <!-- ══════════════════════════════ NIGHT SHIFT SCHEDULE TAB ══════════════════════════════ -->
+  <div id="tab-schedule" class="tab-content">
+    <div id="schedule-layout">
+      <div id="sched-header">
+        <div class="sched-question">Which days are you working night shift?</div>
+        <button id="sched-reset">Reset</button>
+      </div>
+
+      <div id="calendar-scroll-wrap">
+        <div id="calendar-grid"></div>
+      </div>
+
+      <!-- Info messages -->
+      <div id="sched-info" class="sched-hidden">
+        <div id="sched-row1" class="sched-msg sched-hidden">
+          When working less than 7 consecutive night shifts in a row, it is
+          usually better for your body to maintain your daytime circadian
+          rhythm. In this case, you do not need to phase shift your melatonin
+          curve to nights.
+        </div>
+        <div class="sched-sep sched-hidden" id="sched-sep"></div>
+        <div id="sched-row2" class="sched-hidden">
+          <div class="sched-msg">
+            When working 7 or more consecutive night shifts, it might be better
+            for your body to phase shift, or "invert", your circadian rhythm to
+            nights. Would you like to do this, or remain on the day rhythm?
+          </div>
+          <div class="qa-btn-row" style="margin-top:12px">
+            <button class="qa-btn phase-btn" id="phase-shift-btn"
+                    style="background:rgb(28,28,45);border-color:rgb(52,52,80)">Phase Shift</button>
+            <button class="qa-btn phase-btn active" id="maintain-btn"
+                    style="background:rgb(28,105,48);color:rgb(210,255,218);border-color:rgb(50,175,80)">Maintain Day Rhythm</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="sched-print-row">
+        <span class="sched-create-label">Create Report</span>
+        <button id="pdf-btn">PDF</button>
+      </div>
+    </div>
+
+    <!-- Floating day-detail overlay -->
+    <div id="day-detail-overlay" class="overlay-hidden">
+      <div id="day-detail-panel">
+        <div id="dde-header">
+          <div id="dde-spacer"></div>
+          <div id="dde-date"></div>
+          <button id="dde-close">×</button>
+        </div>
+        <canvas id="dde-dial-canvas"></canvas>
+        <div id="dde-table"></div>
+        <div id="dde-banner"></div>
+      </div>
+    </div>
+  </div><!-- #tab-schedule -->
+
+  <!-- ── Credit line ── -->
+  <div id="credit">Made by Alan Moazzam MD MBA &nbsp;<span id="credit-contact">Contact: amoazzam@health.ucsd.edu</span></div>
+
+</div><!-- #app -->
+
+<script src="/night-shift-coach/app/static/js/utils.js"></script>
+<script src="/night-shift-coach/app/static/js/dial.js"></script>
+<script src="/night-shift-coach/app/static/js/plasma.js"></script>
+<script src="/night-shift-coach/app/static/js/sleepiness.js"></script>
+<script src="/night-shift-coach/app/static/js/schedule.js"></script>
+<script src="/night-shift-coach/app/static/js/qa.js"></script>
+<script src="/night-shift-coach/app/static/js/app.js"></script>
+</body>
+</html>
