@@ -1,0 +1,12 @@
+.env*
+.venv
+__pycache__
+*.pyc
+build.py
+prepare.py
+prepare-node.cjs
+record-chip.py
+serve.py
+test_*.py
+pages
+workspace_pages.py

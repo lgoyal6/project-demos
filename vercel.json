@@ -1,0 +1,12 @@
+{
+  "framework": null,
+  "buildCommand": "",
+  "installCommand": "true",
+  "outputDirectory": "public",
+  "trailingSlash": true,
+  "functions": {"api/run.py": {"includeFiles": "vendor/**", "maxDuration": 30}},
+  "headers": [{"source": "/(.*)", "headers": [
+    {"key": "X-Content-Type-Options", "value": "nosniff"},
+    {"key": "Referrer-Policy", "value": "strict-origin-when-cross-origin"}
+  ]}]
+}
