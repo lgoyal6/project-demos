@@ -65,12 +65,30 @@ def run(body):
         return {'decision':result['decision'],'reason':result['reason'],'url_environment':result['url_environment'],'token_environment':result['token_environment'],'network_calls':0}
     if project=='contract-to-revenue':
         from contract_to_revenue.checks import quote_on_page, value_in_quote
+        source='Acme Analytics\nAnnual service: USD 1,200.00\nQuantity: 10 seats\nPayment terms: Net 30'
+        if 'fields' in body:
+            fields=body['fields']
+            if not isinstance(fields,list) or not 1<=len(fields)<=4:raise ValueError('Review between 1 and 4 fields.')
+            rows=[];seen=set()
+            for item in fields:
+                if not isinstance(item,dict):raise ValueError('Each field must be an object.')
+                key=item.get('field')
+                if key not in {'unit_price','quantity','payment_terms','currency'} or key in seen:raise ValueError('Use each supported field once.')
+                seen.add(key);value=item.get('value');quote=item.get('quote')
+                if not isinstance(quote,str) or len(quote)>250:raise ValueError('Source quotes must be at most 250 characters.')
+                if key in {'unit_price','quantity'}:
+                    if isinstance(value,bool):raise ValueError('Enter a numeric value.')
+                    value=float(value)
+                    if not math.isfinite(value) or not 0<=value<=1_000_000:raise ValueError('Numeric values must be between 0 and 1,000,000.')
+                elif not isinstance(value,str) or len(value)>100:raise ValueError('Text values must be at most 100 characters.')
+                on_page=quote_on_page(quote,source);supported=value_in_quote(key,value,quote)
+                rows.append({'field':key,'value':value,'quote':quote,'quote_exists_on_page':on_page,'value_supported_by_quote':supported,'decision':'supported' if on_page and supported else 'needs correction'})
+            return {'rows':rows,'supported':sum(r['decision']=='supported' for r in rows),'source':source,'extraction':'Original deterministic citation checks on a synthetic excerpt. No model extraction.'}
         amount=float(body['amount'])
         if not math.isfinite(amount) or not 0<=amount<=1_000_000:
             raise ValueError('Amount must be between 0 and 1,000,000.')
         quote=str(body['quote'])
         if len(quote)>250:raise ValueError('Quote is too long.')
-        source='Acme Analytics\nAnnual service: USD 1,200.00\nQuantity: 10 seats\nPayment terms: Net 30'
         on_page=quote_on_page(quote,source)
         supported=value_in_quote('unit_price',amount,quote)
         return {'decision':'supported' if on_page and supported else 'needs correction','quote_exists_on_page':on_page,'value_supported_by_quote':supported,'amount':amount,'extraction':'No model extraction was run. These are the original deterministic citation checks.'}

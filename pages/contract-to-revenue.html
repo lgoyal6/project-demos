@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Contract-to-Revenue | Evidence review</title><link rel="stylesheet" href="/workspaces/base.css"><script type="module" src="/workspaces/contract.mjs"></script></head>
+<body class="contract-app">
+<a class="skip" href="#main">Skip to review</a><header class="app-header"><div class="identity"><a href="/" aria-label="All project demos" class="back">‹</a><h1>Contract-to-Revenue</h1><span class="subtle">Evidence review</span></div><span class="subtle">Public source publication pending</span></header>
+<main id="main">
+<div class="review-heading"><div><h2>Acme Analytics</h2><p>Sample order form <span class="separator">/</span> Four fields to review</p></div><div class="review-progress"><span id="review-summary" role="status">Checking evidence…</span><div class="progress-track"><span id="progress-fill"></span></div></div></div>
+<div class="toolbar"><label>Review scenario <select id="scenario"><option value="clean">Matching evidence</option><option value="amount">Incorrect amount</option><option value="quote">Unsupported quote</option></select></label><span class="subtle">Select a field to see its evidence.</span><button id="reset-review" class="push">Reset review</button></div>
+<div class="review-layout">
+<section class="document-pane" aria-label="Source document"><div class="pane-heading"><span>Order form excerpt</span><span class="subtle">Synthetic sample</span></div><article class="document-paper">
+<div class="document-brand">Acme Analytics</div><div class="document-rule"></div><h3>Annual service order</h3><p class="document-context">The following excerpt is the fixed source used by the original citation checks.</p>
+<div class="document-lines"><button data-line="0" class="document-line">Acme Analytics</button><button data-line="1" class="document-line">Annual service: USD 1,200.00</button><button data-line="2" class="document-line">Quantity: 10 seats</button><button data-line="3" class="document-line">Payment terms: Net 30</button></div>
+<div class="document-annotation"><span class="annotation-mark"></span><p id="evidence-caption">Annual service: USD 1,200.00</p></div>
+<div class="document-page-number">Source excerpt · Page 1</div>
+</article><div class="document-bottom"><span>Click a highlighted source line to inspect its field.</span></div></section>
+<section class="review-pane" aria-label="Extracted fields"><div class="pane-heading"><h2>Extracted fields</h2><span class="subtle">Editable</span></div><div id="review-fields"></div>
+<div class="evidence-editor"><div class="inspector-title"><h3 id="selected-field-label">Unit price evidence</h3><span class="tag" id="selected-verdict">Checking</span></div><label class="field">Source quote<textarea id="source-quote" maxlength="250" rows="2"></textarea></label><div class="evidence-checks"><div><span id="quote-check" class="check-symbol"></span><span>Quote occurs in the document</span></div><div><span id="value-check" class="check-symbol"></span><span>Value is supported by the quote</span></div></div><p class="note" id="evidence-explanation"></p><button id="restore-field">Restore this field</button></div>
+<p class="note review-help">Try changing the amount to 999, or edit its quote. The two evidence checks update independently.</p>
+</section></div><p role="status" id="status" class="status"></p>
+</main>
+<footer class="app-footer"><span>Original citation checks · synthetic document</span><details><summary>About this demo</summary><p>Live evidence validation, synthetic order form. The original quote_on_page and value_in_quote functions check each proposed field. The document is a fixed fictional excerpt; no Claude extraction or invoice creation occurs. Field selection locates quote text for display, while acceptance comes from the original backend checks. The repository remains private.</p></details></footer>
+</body></html>
