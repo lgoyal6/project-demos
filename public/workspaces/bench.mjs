@@ -14,5 +14,5 @@ async function update(){
     ready();
   }catch(error){if(error.name!=='AbortError')fail(error);}
 }
-$('confidence').oninput=()=>{$('confidence-label').textContent=Math.round(Number($('confidence').value)*100)+'%';clearTimeout(timer);timer=setTimeout(update,100);};
+$('confidence').oninput=()=>{document.body.dataset.ready='false';$('confidence-label').textContent=Math.round(Number($('confidence').value)*100)+'%';clearTimeout(timer);timer=setTimeout(update,100);};
 $('confidence').onchange=()=>{clearTimeout(timer);update();};$('outcome').onchange=update;update();

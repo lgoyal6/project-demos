@@ -20,8 +20,8 @@ async function update(){
   }catch(error){if(current===revision)fail(error);}
 }
 $('board').onclick=event=>{const b=event.target.closest('[data-event]');if(b)inspect(Number(b.dataset.event));};
-for(const id of ['organizer','kind','cash'])$(id).onchange=()=>{
-  events[selected][id]=id==='cash'?Number($(id).value):$(id).value;clearTimeout(timer);timer=setTimeout(update,100);
+for(const id of ['organizer','kind','cash'])$(id)[id==='cash'?'oninput':'onchange']=()=>{
+  events[selected][id]=id==='cash'?Number($(id).value):$(id).value;document.body.dataset.ready='false';$('lane-reason').textContent='Re-evaluating the selected event…';clearTimeout(timer);timer=setTimeout(update,100);
 };
 $('reset-events').onclick=()=>{events=initial.map(e=>({...e}));inspect(0);update();};
 inspect(0);update();

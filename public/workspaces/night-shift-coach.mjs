@@ -23,7 +23,7 @@ async function update(){
   }catch(error){if(current===revision)fail(error);}
 }
 for(const id of ['sleep-onset','eating','schedule-mode'])$(id).onchange=update;
-$('hours').oninput=()=>{$('hours-label').textContent=$('hours').value+' hours';clearTimeout(timer);timer=setTimeout(update,120);};$('hours').onchange=()=>{clearTimeout(timer);update();};
+$('hours').oninput=()=>{document.body.dataset.ready='false';$('hours-label').textContent=$('hours').value+' hours';clearTimeout(timer);timer=setTimeout(update,120);};$('hours').onchange=()=>{clearTimeout(timer);update();};
 $('schedule-days').onclick=event=>{const button=event.target.closest('[data-day]');if(button){day=Number(button.dataset.day);update();}};
 try{const response=await fetch('/api/run/?project=night-shift-coach&operation=sun_times');if(response.ok){const sun=await response.json();sunrise=sun.sunrise;sunset=sun.sunset;}}catch{}
 update();
