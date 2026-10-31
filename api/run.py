@@ -98,7 +98,8 @@ def run(body):
         if not math.isfinite(confidence) or not 0<=confidence<=1:raise ValueError('Probability must be between 0 and 1.')
         passed=body['outcome']=='pass'
         agent,customer=bonds.settle(5.25,10.50,confidence,passed)
-        return {'disclosure':'Demo payment simulation. No funds moved.','hypothetical_outcome':body['outcome'],'confidence':confidence,'brier_score':bonds.brier_score(confidence,passed),'virtual_amount_to_agent':agent,'virtual_amount_to_customer':customer,'price_only_on_pass':5.25 if passed else 0}
+        curve=[{'confidence':i/10,'pass_agent':bonds.settle(5.25,10.50,i/10,True)[0],'fail_agent':bonds.settle(5.25,10.50,i/10,False)[0]} for i in range(11)]
+        return {'disclosure':'Demo payment simulation. No funds moved.','hypothetical_outcome':body['outcome'],'confidence':confidence,'brier_score':bonds.brier_score(confidence,passed),'virtual_amount_to_agent':agent,'virtual_amount_to_customer':customer,'price_only_on_pass':5.25 if passed else 0,'curve':curve}
     if project=='wildfire-preproc':
         import numpy as np
         check=module('demo_wildfire_values','wildfire_values.py')
