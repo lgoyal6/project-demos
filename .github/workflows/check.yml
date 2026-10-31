@@ -18,3 +18,5 @@ jobs:
           python-version: '3.12'
       - run: python render.py
       - run: python check-site.py
+      - run: node tests/workspaces.mjs
+      - run: python check-source-boundary.py
