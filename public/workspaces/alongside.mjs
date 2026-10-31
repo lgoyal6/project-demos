@@ -1,14 +1,24 @@
 import {$,esc,ready,fail} from './utils.mjs';
 import {data} from './charts.mjs';
 let fixture,selected;
+function nodeLines(label){
+  const words=label.split(/\s+/),lines=[''];
+  for(let i=0;i<words.length;i++){
+    const at=lines.length-1;
+    if((lines[at]+' '+words[i]).trim().length>26&&lines[at]){
+      if(lines.length===2){lines[1]+='…';break;}
+      lines.push(words[i]);
+    }else lines[at]=(lines[at]+' '+words[i]).trim();
+  }
+  return [lines[0],lines[1]||''];
+}
 function draw(){
   const thread=$('thread').value,nodes=fixture.nodes.filter(n=>n.thread===thread),edges=fixture.edges.filter(e=>e[2]===thread),positions={};
   if(!nodes.some(n=>n.id===selected))selected=nodes[0].id;
   nodes.forEach((n,i)=>positions[n.id]=[125+i%3*230,90+Math.floor(i/3)*165]);
   $('evidence-graph').setAttribute('viewBox','0 0 710 '+(Math.ceil(nodes.length/3)*165+30));
   $('evidence-graph').innerHTML=edges.map(([from,to])=>'<line x1="'+positions[from][0]+'" y1="'+positions[from][1]+'" x2="'+positions[to][0]+'" y2="'+positions[to][1]+'"/>').join('')+nodes.map(n=>{
-    const [x,y]=positions[n.id],short=n.label.length>33?n.label.slice(0,30)+'…':n.label;
-    const first=short.slice(0,17),second=short.slice(17);
+    const [x,y]=positions[n.id],[first,second]=nodeLines(n.label);
     return '<g data-node="'+esc(n.id)+'" class="'+(n.id===selected?'selected':'')+'" role="button" tabindex="0" aria-label="'+esc(n.label)+'"><rect x="'+(x-98)+'" y="'+(y-38)+'" width="196" height="76"/><title>'+esc(n.label)+'</title><text text-anchor="middle" x="'+x+'" y="'+(y-9)+'">'+esc(first)+'</text><text text-anchor="middle" x="'+x+'" y="'+(y+9)+'">'+esc(second)+'</text><text text-anchor="middle" x="'+x+'" y="'+(y+28)+'" style="font-size:9px;fill:#8a98a4">'+esc(n.meta||n.kind)+'</text></g>';
   }).join('');
   const node=nodes.find(n=>n.id===selected),detail=fixture.details[thread];
