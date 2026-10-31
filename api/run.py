@@ -111,6 +111,11 @@ def run(body):
         elif case=='elevation':
             grid=np.indices((20,20)).sum(axis=0).astype(float)*10+120;grid[9,9]=10000;layer=check.LayerKey.DEM;kind=check.LayerKind.CONTINUOUS;nodata=-9999
         elif case!='valid':raise ValueError('Unknown raster scenario.')
+        if 'grid' in body:
+            supplied=body['grid']
+            if not isinstance(supplied,list) or len(supplied)!=20 or any(not isinstance(row,list) or len(row)!=20 for row in supplied):raise ValueError('Use a 20 by 20 raster.')
+            if any(isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or abs(v)>100000 for row in supplied for v in row):raise ValueError('Raster values must be finite numbers between -100,000 and 100,000.')
+            grid=np.asarray(supplied,dtype=float)
         errors=[];check._check_data(grid,layer,kind,nodata,errors)
         return {'decision':'rejected' if errors else 'valid value range','layer':layer.value,'errors':errors,'grid':grid.tolist(),'scope':'Synthetic array value checks only, not a fire forecast.'}
     raise ValueError('Unknown experiment.')
