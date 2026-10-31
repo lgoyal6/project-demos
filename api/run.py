@@ -49,12 +49,14 @@ def run(body):
         day=body.get('phase_day',0)
         if isinstance(day,bool) or not isinstance(day,int) or not 0<=day<=30:raise ValueError('Phase day must be an integer from 0 to 30.')
         dial,plasma,schedule=model.make_state(**clean)
+        if 'ir_curve' not in clean:
+            dial._ir_curve=plasma.compute_ir_curve_for(dial._dlmo,dial._mcbt,0)
         if operation=='phase_shift':
             if day<1:raise ValueError('A phase-shift day starts at 1.')
             dlmo,mcbt,shift,curve=model.phase_shift_state(schedule,day)
             dial._dlmo=dlmo;dial._mcbt=mcbt;dial._ir_curve=curve
             return {'dlmo':dlmo,'mcbt':mcbt,'shift_hours':shift,'ir_curve':curve,'rows':model.recommendation_rows(dial,day)}
-        return {'rows':model.recommendation_rows(dial,day)}
+        return {'rows':model.recommendation_rows(dial,day),'dlmo':dial._dlmo,'mcbt':dial._mcbt,'shift_hours':0,'ir_curve':dial._ir_curve}
     if project=='gcapi':
         env=module('demo_gcapi_env','gcapi_env.py')
         target={'production':env.PRODUCTION_BASE_URL,'sandbox':env.SANDBOX_BASE_URL,'unknown':'https://example.invalid/api'}[body['target']]
