@@ -34,6 +34,7 @@ function showEvidence(){
 }
 function selectField(i){selected=i;showEvidence();}
 function markPending(){
+  $('export-review').disabled=true;$('review-download').hidden=true;$('export-note').textContent='Inputs changed. All fields must be checked again.';
   results=[];$('review-summary').textContent='Checking evidence…';$('selected-verdict').textContent='Checking';
   for(let i=0;i<fields.length;i++){$('state-'+i).textContent='Checking evidence';$('state-'+i).classList.remove('correction');}
   for(const id of ['quote-check','value-check']){$(id).textContent='·';$(id).classList.remove('failed');}
@@ -44,6 +45,7 @@ async function validate(){
   try{
     const result=await request('/api/run/',{project:'contract-to-revenue',fields:fields.map(({field,value,quote})=>({field,value,quote}))},controller.signal);
     if(current!==revision)return;
+    $('export-review').disabled=result.supported!==4;$('export-note').textContent=result.supported===4?'All four values are supported. You can download this reviewed snapshot.':'Correct the remaining evidence before creating a handoff.';
     results=result.rows;$('review-summary').textContent=result.supported+' of 4 fields supported';$('progress-fill').style.width=result.supported/4*100+'%';
     results.forEach((r,i)=>{$('state-'+i).textContent=r.decision==='supported'?'Supported by source':'Needs correction';$('state-'+i).classList.toggle('correction',r.decision!=='supported');});
     showEvidence();ready();
@@ -71,3 +73,5 @@ document.querySelectorAll('.document-line').forEach(button=>button.onclick=()=>{
 $('restore-field').onclick=()=>{fields[selected]={...defaults[selected]};$('value-'+selected).value=fields[selected].value;changed();showEvidence();};
 $('scenario').onchange=load;$('reset-review').onclick=()=>{$('scenario').value='clean';load();};
 load();
+
+$('export-review').onclick=()=>{if(results.length!==4||results.some(r=>r.decision!=='supported'))return;const prior=$('review-download').href;if(prior.startsWith('blob:'))URL.revokeObjectURL(prior);const packet={document:'Acme Analytics, synthetic order form',source_excerpt:sourceLines.join('\n'),fields:results,scope:'Reviewed synthetic evidence handoff. No catalog import, invoice or external delivery.'};$('review-download').href=URL.createObjectURL(new Blob([JSON.stringify(packet,null,2)],{type:'application/json'}));$('review-download').hidden=false;$('export-note').textContent='Reviewed snapshot ready to save. Editing any field invalidates this handoff.';};
