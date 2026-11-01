@@ -33,3 +33,5 @@ $('evidence-graph').onclick=activate;$('evidence-graph').onkeydown=event=>{if(ev
 $('node-links').onclick=event=>{const target=event.target.closest('[data-link]');if(target){selected=target.dataset.link;draw();}};
 $('thread').onchange=()=>{selected=null;draw();};
 try{fixture=await data('alongside');$('thread').innerHTML=fixture.threads.map(t=>'<option value="'+esc(t.id)+'">'+esc(t.label)+'</option>').join('');draw();ready();}catch(error){fail(error);}
+
+$('inspect-recall').onclick=async()=>{try{const r=await data('alongside-recall');$('recall-result').innerHTML='<h4>'+(r.allowed?'No blocking constraint in this fixture':'Connected hard constraint blocks the fictional addition')+'</h4>'+r.violations.map(v=>'<blockquote>'+esc(v.claim)+'</blockquote><p>'+esc(v.because)+' · '+esc(v.source)+' · '+esc(v.at)+'</p>').join('')+'<p class="note">Recorded native execution: '+esc(r.source.command)+' using '+esc(r.source.runtime)+'. Walker SHA-256: '+esc(r.source.walker_sha256)+'</p><a href="/data/alongside-recall.json">Inspect retained result and hashes</a>';ready();}catch(error){fail(error);}};

@@ -1,0 +1,26 @@
+{
+  "allowed": false,
+  "violations": [
+    {
+      "claim": "Fictional category is excluded",
+      "because": "Synthetic public demonstration rule",
+      "source": "fictional instruction author",
+      "at": "2026-11-01"
+    }
+  ],
+  "scope": "Original Jac Recall walker on a fictional two-hop category constraint. No medical advice, model calls or patient records.",
+  "source": {
+    "repository": "https://github.com/nathansso/Alongside",
+    "revision": "00c7b3ee09e778e9dc7d09293a665435f62cd449",
+    "walker": "read.jac",
+    "walker_sha256": "33a65b5372686063950a71c52612f5737b2e7695feddd24c6235ff4f8f239e2a",
+    "sha256": {
+      "public_recall_demo.jac": "3f1d7bb4eb2305bc90f27aa9e28655d008dc32d19aecddd953051d22b883e16c",
+      "read.jac": "33a65b5372686063950a71c52612f5737b2e7695feddd24c6235ff4f8f239e2a",
+      "graph.jac": "bbde15117a5443c8a66b45f02f84e4a68b33b82156443d2cabe707b68f44fbd2"
+    },
+    "command": "python3 export_public_recall.py OUTPUT.json",
+    "runtime": "jac 0.34.5  (Darwin arm64)",
+    "isolation": "Fresh temporary directory and graph per invocation; removed after result capture"
+  }
+}
