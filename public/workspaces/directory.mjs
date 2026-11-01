@@ -1,7 +1,7 @@
 import {$,esc,ready,fail} from './utils.mjs';
 import {data} from './charts.mjs';
 let projects;
-const groups={tools:{title:'Interactive tools',slugs:['repomap','contract-to-revenue','bench','gcapi','hackqueue','wildfire-preproc','night-shift-coach']},evidence:{title:'Evidence explorers',slugs:['chip-placer','buildsignal','urbansound8k','blackbox','alongside','firecracker','midnight-mandate','status-clock']},study:{title:'Research and reconstruction',slugs:['routing-lab','helmet-identification']}};
+const groups={tools:{title:'Interactive tools',slugs:['repomap','contract-to-revenue','bench','gcapi','hackqueue','actiongate','memharness','pms-race','wildfire-preproc','night-shift-coach']},evidence:{title:'Evidence explorers',slugs:['chip-placer','buildsignal','urbansound8k','blackbox','alongside','firecracker','midnight-mandate','status-clock','flightrisk','apparatus-comps','job-discovery']},study:{title:'Research and reconstruction',slugs:['routing-lab','helmet-identification']}};
 function draw(){
   const query=$('search').value.trim().toLowerCase(),format=$('format').value;let count=0;
   $('project-directory').innerHTML=Object.entries(groups).flatMap(([key,group])=>{
