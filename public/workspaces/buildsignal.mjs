@@ -10,6 +10,9 @@ function filter(){
 function category(){
   const selected=$('category').value,rows=snapshot.demand_first10.filter(r=>r.category===selected);
   $('demand-chart').innerHTML=plot([rows.map(r=>r.predicted_qty)],rows.map(r=>r.month.slice(5)),{max:Math.max(...rows.map(r=>r.predicted_qty),1)*1.15,label:'Recorded synthetic demand for '+selected});
+  const signals=snapshot.price_signals.filter(r=>r.category===selected),surplus=snapshot.surplus_top5;
+  $('material-decision').innerHTML=signals.length?signals.map(r=>'<article><h4>'+esc(r.region)+': '+esc(r.signal==='BUY_NOW'?'Buy now':r.signal.replaceAll('_',' ').toLowerCase())+'</h4><p>Recorded '+esc(r.category)+' price: '+number(r.current_price)+' '+esc(r.unit)+'. Expected change in this synthetic snapshot: '+number(r.expected_change_pct,2)+'%.</p></article>').join(''):'<p>No recorded price decision for this material.</p>';
+  $('surplus-review').innerHTML=table(surplus,[['demand_id','Demand'],['material_id','Material ID'],['from_project','Surplus source'],['to_project','Destination'],['qty_transferred','Recorded transfer quantity'],['distance_km','Distance (km)']]);
   $('vendor-ranking').innerHTML=bars(snapshot.vendors[selected].ranking.slice(0,7).map(([id,score])=>[id,score]),100);
 }
 try{
