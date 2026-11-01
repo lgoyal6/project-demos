@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RepoMap | Code and dependencies</title><link rel="stylesheet" href="/workspaces/base.css"><script type="module" src="/workspaces/repo.mjs"></script></head>
+<body class="repo-app">
+<a class="skip" href="#main">Skip to workspace</a><header class="app-header"><div class="identity"><a href="/" aria-label="All project demos" class="back">‹</a><h1>RepoMap</h1><span class="subtle">Code and dependencies</span></div><a href="https://github.com/lgoyal6/RepoMap" target="_blank" rel="noopener noreferrer">GitHub ↗</a></header>
+<main id="main">
+<div class="repo-intro"><p>Edit an import. Follow the connection.</p><span>The original extractor runs on your small example workspace.</span></div>
+<div class="toolbar"><label>Example <select id="example"><option value="shop">Small storefront</option><option value="comment">Call-like comment</option><option value="rust">Rust limitation</option></select></label><button id="reset-code">Reset example</button><label class="check push"><input id="auto-run" type="checkbox" checked> Update as I type</label><button id="run-graph" class="primary">Update graph</button></div>
+<div class="code-layout">
+<aside class="file-tree"><h2>Files</h2><div id="file-list"></div><p class="note">Edit these examples freely. Source text is parsed, never executed.</p></aside>
+<section class="editor-pane" aria-label="Source editor"><div class="pane-heading"><span id="active-file">main.ts</span><span id="edit-state" class="subtle">Saved to this session</span></div><div class="editor-wrap"><pre id="line-numbers" aria-hidden="true">1</pre><textarea id="source-editor" aria-label="Source code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off"></textarea></div><div class="editor-bottom"><span id="cursor-position">Line 1</span><span id="source-size"></span></div></section>
+<section class="graph-pane" aria-label="Dependency graph"><div class="pane-heading"><h2>Dependency graph</h2><span id="graph-count" class="subtle"></span></div><div class="graph-surface"><svg id="dependency-graph" aria-label="File dependency graph"></svg><p id="graph-empty" class="graph-empty" hidden>No connections found in this example.</p></div><div class="edge-section"><h3>Connections</h3><p class="note">Select a connection to inspect its source.</p><div id="edge-list"></div></div></section>
+</div>
+<div class="repo-status"><p role="status" id="status" class="status"></p><p id="extractor-note" class="note">Regex extraction preserves the original parser's limits. An edge does not prove code execution.</p></div>
+</main>
+<footer class="app-footer"><span>Original DependencyService · isolated workspace</span><details><summary>About this demo</summary><p>Live original extraction code with a temporary-file adapter. Up to six small files are parsed in an isolated temporary directory and removed afterward. The original regex extractor is unchanged. Rust files are discovered but have no extraction branch; export detection and call-like comments have known limitations. Source-line highlighting locates the import text in the editor; the original graph does not return source spans. VS Code and IBM Bob are not connected.</p></details></footer>
+</body></html>

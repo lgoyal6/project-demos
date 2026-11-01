@@ -1,0 +1,8 @@
+{
+  "recorded_solver_revision": "098b65f79a2eb554bd071884b32d41e3ea428864",
+  "source_files": {
+    "cpp_placer/src/partcl_place.cpp": "0d3932f976ac9277ab8bb6cb1d5f8de4cde49e02948a25ce8f91bfda5820f2c2",
+    "placement.py": "e01877f2b3c76efc76655560635531dbae456b3f909f5910ba19606ffd47c19f"
+  },
+  "scope": "Three small synthetic samples recorded separately from the original 10-test challenge result. Nonzero solver status rejects an invalid output. The benchmark ranking is not a guarantee that every input can be placed."
+}

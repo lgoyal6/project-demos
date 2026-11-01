@@ -1,0 +1,96 @@
+{
+  "actiongate": {
+    "repository": "https://github.com/lgoyal6/actiongate",
+    "commit": "74ae6f6dc1136efeec85f9544f72454826321a0a",
+    "source_directory": "docs",
+    "sha256": {
+      ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "app.js": "e880ac33360d868dbd5c845ed04ee1c617c8baf6bd934326ea1b7545399b5382",
+      "data/actiongate/__init__.py": "b179e3e6a7479c2ac3133d4fdbd737a6839f62bbb768af38f846a171273ad464",
+      "data/actiongate/classify.py": "731017e0da17fa8e8c24e6ce42aff209bd613ec3530a036ac62d9d082a8b3e3f",
+      "data/actiongate/features.py": "8370f746d428c741489f8c2f8493087b942c50672f73b65871d45b2223b73ed6",
+      "data/actiongate/schema.py": "012648b3bf1731c4456407de9191838264303c30ca12ce42dd486bb15659f94b",
+      "data/actiongate/weights.json": "462e01b9ea0b6c4429665542406c5ee2ee45d283218f32dbe262acdd3d634e11",
+      "data/sweep.json": "dd348844e38fbf1d5474704b0e61ac8e8ef9f7978ab07a007083d84453cbd1c3",
+      "index.html": "0329378ef09fed80931cb6918dd0c5e4d2b2636a5b632902e44e8dafbfb86fda",
+      "nav.js": "c9496b27b265ff8cdf29e9ba94a384b5056d7e382037263259c2d02e0d776d93",
+      "og.png": "d49b4fe7347b0b75c7fe6366c48e1552b5e8707a983dd2d2d473267ed6af2a78",
+      "style.css": "7f5be47fe1b28b05190f3ffecb25b8292b39342e477e152adf70f5d5347de7e3"
+    }
+  },
+  "apparatus-comps": {
+    "repository": "https://github.com/lgoyal6/apparatus-comps",
+    "commit": "92da9ac16c0ee795a6215d3b33edb90760795b48",
+    "source_directory": "docs",
+    "sha256": {
+      "app.js": "a088b74ea4f1778066091b2b640a3dc30f991e1167fe8e6e087f6cd19d05d399",
+      "data/backtest.json": "2f2d62914c485a006d7df8a206112ccadd750e7ea6ad096ebc7542893cd06f2d",
+      "data/comps.py": "ec66e6bb1ca80afcb94670255499127f9515c65ec009aaa88bd21750360013c5",
+      "data/dataset.csv": "0f754f6a9dccec85403d49a26e17ec9707eb5dae84744fb9ef2c4700d0fbe09f",
+      "estimate.js": "54f76ac534715e66fe8cf21e71071dbc9fd2af91d9cfbfede407b7c215ebff75",
+      "index.html": "2ec2ae146592154f0cbef07b9c5be919b372a4f0b4ce7640e65363af5b0c7f78",
+      "nav.js": "c9496b27b265ff8cdf29e9ba94a384b5056d7e382037263259c2d02e0d776d93",
+      "og.png": "51ce5b395e377c37b6e0a5e3bb18f006369778fff1dcbdd30d7ca580ff30daa3",
+      "style.css": "598e3b05b82f35a588c4820334d38224fc58f1c5dfafb94b24f0d82fb4f02922"
+    },
+    "local_patches": {
+      "index.html": {
+        "sha256": "5dae3f50a92c255c51f3b8232c596d259b585d4c7292926fc59bb1f25704871a",
+        "reason": "Lead with the real user task and existing source/evaluation counts; keep the complete error and calibration report below."
+      }
+    }
+  },
+  "flightrisk": {
+    "repository": "https://github.com/lgoyal6/flightrisk",
+    "commit": "b2513b882eb420650d7393fa85ff5fab8abc62dc",
+    "source_directory": "docs",
+    "sha256": {
+      "app.js": "7d4c3ff9555e7ae9219e9408c32c409f85f83a519c9f85d583f4f173844b344a",
+      "data/alerts.json": "757af8864bba3f68e35e0f7b578ebfa6db3f6a07cf682f892abfdd990c0d3052",
+      "data/models.json": "5f70a49a91ad2417b42c58c956c5a919ebace7d72b007cea2fdbc6a851759a9a",
+      "data/ushape.json": "898461636d6f675160018b4ebc698a7fc3179206030fce7d42ca88a85230c183",
+      "index.html": "74e217e93f46380b141e22463f3829d9ed7ee2ceabe17f3e67130b5272216f2e",
+      "nav.js": "c9496b27b265ff8cdf29e9ba94a384b5056d7e382037263259c2d02e0d776d93",
+      "og.png": "ecedc2b9882ccde1b46539f67f04a4648d2520a99af2cc3667578190cca8ab05",
+      "style.css": "9b012ac84dd72a2713df55fe7010023b5d9d6658ac81659a70fd2e47cc7e8b4c"
+    }
+  },
+  "job-discovery": {
+    "repository": "https://github.com/lgoyal6/job-discovery",
+    "commit": "f3c13d55125e0a1effa983a0276effa0c0a0f694",
+    "source_directory": "public-proof",
+    "sha256": {
+      "index.html": "a49d2b3ff267627e082194aba08b9352d4d1ed6f00eb493404bdaec20e6ac877",
+      "report.json": "79910ae32f2cd805784921e8be382a0ce94a328eef144151a9be48842d47e277"
+    }
+  },
+  "memharness": {
+    "repository": "https://github.com/lgoyal6/memharness",
+    "commit": "666ada96caa148eafd7c541b81830f2764534659",
+    "source_directory": "docs",
+    "sha256": {
+      "app.js": "a921c16f7dc4d41f50093a9db35444083f8ba074e1e4c01a80512bc2cd4b13d4",
+      "calc.js": "ebe9e0a331cb8f9bd7b06e81687bd8f0c10390e3ea1d520db24331a7d5bc3dd4",
+      "data/runs.json": "9025d77288a91a11f8b39f3175465efd43962b03ac88632e88080cefd0ccd19f",
+      "index.html": "9b34fb8f8c939540fbefd18c2ad19305369fc8b1cb3c6565e5287a9842ca0039",
+      "nav.js": "c9496b27b265ff8cdf29e9ba94a384b5056d7e382037263259c2d02e0d776d93",
+      "og.png": "c9b4d894c205567b7bf051b8f43dd1d773990db6a299ab542a451e85d95beffe",
+      "style.css": "991b010560e824032d9207253090eacd9ba79b00d4b78e89f190485c56e64dcc"
+    }
+  },
+  "pms-race": {
+    "repository": "https://github.com/lgoyal6/pms-race",
+    "commit": "0d42b2c11eb0e3ec237410604903e601d2983d17",
+    "source_directory": "docs",
+    "sha256": {
+      "app.js": "ec32efaee8bfd84552b70f794aad9d0fa85a3486f5df072c85fcff449af36f2f",
+      "data/runs.json": "c2273be7bcd24680d9d9441be01d7174f3d70b472e239c38d900481ac0350d7a",
+      "data/server.py": "81694c5f7df960fd802114d93468f7f3a5d89a60911282f0bca09105d8b1f2da",
+      "index.html": "76591d45aadc098cbb32429d750872dfb9399f4d07c1037a832d830f86a1dbc6",
+      "nav.js": "c9496b27b265ff8cdf29e9ba94a384b5056d7e382037263259c2d02e0d776d93",
+      "og.png": "f41df407fadaf1cd41717d84dc6fc8218b9ad1a1ff2e657412ab6af398d63d7b",
+      "race.js": "43b41f2b73dca5df8c7f88b6df700eb3a786b01f65e4444106d1ba0225ac8e9d",
+      "style.css": "11e8df0f8ef5ed3dc81b9b1faf880044f770c18e9615ea0df61fa9069fb8a4e5"
+    }
+  }
+}

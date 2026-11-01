@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Mixed-Size Chip Placer | Placement workspace</title><link rel="stylesheet" href="/workspaces/base.css"><script type="module" src="/workspaces/chip.mjs"></script></head>
+<body class="chip-app">
+<a class="skip" href="#main">Skip to placement</a>
+<header class="app-header"><div class="identity"><a href="/" aria-label="All project demos" class="back">‹</a><h1>Mixed-Size Chip Placer</h1><span class="subtle">Placement workspace</span></div><a href="https://github.com/lgoyal6/intern_challenge/tree/cpp-placer" target="_blank" rel="noopener noreferrer">GitHub ↗</a></header>
+<main id="main">
+<div class="toolbar"><label>Netlist <select id="case"><option value="0">22 cells</option><option value="1">52 cells</option><option value="2">102 cells</option></select></label><div class="segments" aria-label="Placement"><button id="output" aria-pressed="true">Solver output</button><button id="input" aria-pressed="false">Input</button></div><label class="check"><input type="checkbox" id="show-nets" checked> Connections</label><label class="check"><input type="checkbox" id="compare"> Compare input</label><button id="reset" class="push">Reset edits</button></div>
+<div class="placement-layout">
+<section class="drawing" aria-label="Placement canvas">
+<div class="canvas-top"><span id="canvas-label">Recorded solver output</span><div class="zoom-controls"><button id="zoom-out" aria-label="Zoom out">−</button><output id="zoom-label">100%</output><button id="zoom-in" aria-label="Zoom in">+</button><button id="fit">Fit</button></div></div>
+<div class="compare-pane" id="compare-pane" hidden><span>Recorded input</span><svg id="before-canvas" aria-label="Recorded input placement"></svg></div>
+<svg id="placement-canvas" aria-label="Interactive placement canvas. Select a cell, then drag it or use arrow keys." tabindex="0"><g id="net-layer"></g><g id="cell-layer"></g></svg>
+<div class="canvas-bottom"><span>Drag a cell to move it. Drag empty space to pan.</span><span id="coordinate-label">Coordinates in layout units</span></div>
+</section>
+<aside class="inspector"><div class="inspector-title"><h2>Layout</h2><span class="tag" id="layout-state">Recorded</span></div><dl class="stat-list"><div><dt>Cells</dt><dd id="cell-count">22</dd></div><div><dt>Overlapping pairs</dt><dd id="overlap-count">0</dd></div><div><dt>Recorded solver verdict</dt><dd id="solver-verdict">Accepted</dd></div></dl><p class="note" id="layout-note">Select a cell to inspect its connections.</p>
+<div class="inspector-title"><h2>Cell inspector</h2></div><label class="field">Selected cell<select id="cell-picker"></select></label><div id="cell-details"><dl class="stat-list"><div><dt>Size</dt><dd id="cell-size"></dd></div><div><dt>Connections</dt><dd id="cell-connections"></dd></div></dl><div class="position-fields"><label class="field">X position<input id="cell-x" type="number" step="0.25"></label><label class="field">Y position<input id="cell-y" type="number" step="0.25"></label></div><p class="note">Arrow keys move the selected cell by 0.25 units. Hold Shift for 1 unit.</p></div>
+<div class="inspector-title"><h2>Overlap check</h2></div><div id="overlap-list" class="overlap-list"></div>
+</aside></div><p role="status" id="status" class="status"></p>
+<p class="note">The challenge’s reported 10-test result and these three later synthetic samples are separate workloads. A rejected sample is not a successful placement. <a href="/data/chip-source.json">Inspect solver revision and source hashes</a>.</p></main>
+<footer class="app-footer"><span id="record-label">Original C++20 solver · recorded synthetic input</span><details><summary>About this demo</summary><p>Recorded native C++ execution on synthetic netlists. Three seeded examples were run with the original solver. Rejected outputs stay rejected. Moving cells performs a new browser overlap check; it does not rerun the solver. Connection lines use the original net endpoints and seeded pin offsets. These examples are separate from the challenge benchmark.</p></details></footer>
+</body></html>
