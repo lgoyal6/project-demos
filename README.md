@@ -2,7 +2,7 @@
 
 [Open the demos](https://laksh-project-demos.vercel.app/)
 
-Seventeen project demonstrations, each explicit about whether it executes original
+Twenty-three project demonstrations, each explicit about whether it executes original
 code, explores recorded evidence, uses fictional fixtures, or reconstructs a
 teaching example. Interactive controls never turn recorded results into new
 measurements.
@@ -48,3 +48,20 @@ Laksh Goyal for the native SwiftUI port. Helmet Identification Model cites the
 published Azure Custom Vision paper and does not claim live inference.
 Original public project repositories remain the source for their implementations
 and licenses. This repository does not relicense those implementations.
+
+## HTTPS fallback copies
+
+The six `lgoyal6.github.io` demonstrations have local fallback copies under
+`public/`. Their original repository commits and asset hashes are recorded in
+`public/data/https-mirror-sources.json`. The Apparatus-Comps introduction has a
+documented presentation patch; its full recorded evaluation remains present.
+The copies preserve original computation and public-source links.
+
+These local changes do not repair GitHub Pages itself or change public resume
+links. Verify the deployed HTTPS paths before changing canonical links.
+
+New walkthroughs distinguish native computation, recorded native results and
+browser-only explanation. Alongside and Wildfire retain original runtime output
+with source hashes. Bench describes the execution/scoring pipeline without
+creating rig records. SpeakUp's recording-to-reviewed-export flow lives in its
+own repository and uses a recorded ASR result.
